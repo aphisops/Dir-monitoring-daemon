@@ -1,0 +1,32 @@
+# Nazwa kompilatora
+CC = gcc
+
+# Flagi kompilatora
+CFLAGS = -Wall -Wextra
+
+# Flagi linkera dla bibliotek OpenSSL
+LDFLAGS = -lssl -lcrypto
+
+# Nazwa pliku wyjściowego
+TARGET = dimonz
+
+# Pliki źródłowe
+SOURCES = demonmess.c
+
+# Pliki obiektowe
+OBJECTS = $(SOURCES:.c=.o)
+
+# Reguła domyślna - kompilacja całego programu
+all: $(TARGET)
+
+# Kompilacja programu
+$(TARGET): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS) $(LDFLAGS)
+
+# Reguła kompilacji plików źródłowych do plików obiektowych
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Reguła czyszczenia plików tymczasowych i pliku wyjściowego
+clean:
+	rm -f $(OBJECTS) $(TARGET)
